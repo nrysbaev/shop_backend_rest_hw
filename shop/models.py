@@ -14,6 +14,7 @@ class Category(models.Model):
 
 class Tag(models.Model):
     name = models.CharField(max_length=100)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name
@@ -32,7 +33,8 @@ class Product(models.Model):
 
 class Review(models.Model):
     text = models.TextField()
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE,
+                                related_name='reviews')
 
     def __str__(self):
         return self.product.title

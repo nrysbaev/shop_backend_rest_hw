@@ -20,3 +20,17 @@ def products_detail_view(request, id):
         return Response(status=status.HTTP_404_NOT_FOUND)
     data = serializers.ProductDetailSerializer(product).data
     return Response(data=data)
+
+
+@api_view(['GET'])
+def products_reviews_view(request):
+    products = models.Product.objects.all()
+    data = serializers.ProductReviewSerializer(products, many=True).data
+    return Response(data=data)
+
+
+@api_view(['GET'])
+def products_tags_view(request):
+    products = models.Product.objects.all()
+    data = serializers.ProductTagsSerializer(products, many=True).data
+    return Response(data=data)
