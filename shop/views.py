@@ -17,11 +17,14 @@ def products_list_view(request):
         if not serializer.is_valid():
             return Response(status=status.HTTP_406_NOT_ACCEPTABLE,
                             data={'errors': serializer.errors})
-        title = serializer.initial_data['title']
-        description = serializer.initial_data.get('description', '')
-        price = serializer.initial_data['price']
-        category = serializer.initial_data['category']
-        tags = serializer.initial_data['tags']
+        print('request.data:', request.data)
+        print('serializer.validated_data: ', serializer.validated_data)
+        # validated data works normally without errors
+        title = serializer.validated_data['title']
+        description = serializer.validated_data.get('description', '')
+        price = serializer.validated_data['price']
+        category = serializer.validated_data['category']
+        tags = serializer.validated_data['tags']
         # reviews = serializer.initial_data['product_reviews']
         product = models.Product.objects.create(
             title=title, description=description, price=price,
