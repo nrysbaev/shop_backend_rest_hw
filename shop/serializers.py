@@ -22,6 +22,19 @@ class ReviewSerializer(serializers.ModelSerializer):
         fields = ['text']
 
 
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ['id', 'title', 'description', 'price',
+                  'category', 'tags']
+
+    def validate_title(self, title):
+        product = Product.objects.filter(title=title)
+        if product:
+            raise ValidationError('This Product already exists!')
+        return title
+
+
 class ProductListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
@@ -29,9 +42,11 @@ class ProductListSerializer(serializers.ModelSerializer):
 
 
 class ProductDetailSerializer(serializers.ModelSerializer):
-    category = CategorySerializer()
-    tags = TagSerializer(many=True)
-    product_reviews = ReviewSerializer(many=True)
+    title = serializers.CharField(required=False)
+    price = serializers.IntegerField(required=False)
+    category = CategorySerializer(required=False)
+    tags = TagSerializer(many=True, required=False)
+    product_reviews = ReviewSerializer(many=True, required=False)
 
     class Meta:
         model = Product
@@ -39,7 +54,7 @@ class ProductDetailSerializer(serializers.ModelSerializer):
 
 
 class ProductReviewSerializer(serializers.ModelSerializer):
-    reviews = ReviewSerializer(many=True)
+    product_reviews = ReviewSerializer(many=True)
 
     class Meta:
         model = Product
@@ -79,3 +94,5 @@ class ProductUpdateSerializer(serializers.Serializer):
     price = serializers.IntegerField(required=False)
     category = serializers.IntegerField(required=False)
     tags = serializers.ListSerializer(required=False, child=serializers.IntegerField())
+
+
