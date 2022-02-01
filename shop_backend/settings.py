@@ -41,7 +41,21 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'shop',
+    'users',
+    'rest_framework.authtoken',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication'
+    ]
+}
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'pyback12@gmail.com'
+EMAIL_HOST_PASSWORD = 'X03vYAQg9SK93JN6hz7L'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
