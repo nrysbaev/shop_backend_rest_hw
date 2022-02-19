@@ -54,6 +54,9 @@ class ActivateAPIView(GenericAPIView):
         return Response(data={'User activated successfully!'})
 
 
+class SomeNewClass:
+    print('New class for branch test')
+
 # @api_view(['POST'])
 # def register(request):
 #     if request.method == 'POST':
